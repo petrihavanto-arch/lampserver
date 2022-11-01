@@ -29,23 +29,11 @@ else:
         exit(1)
 
 
-
-
-
-
-
-
-
-
-
-
-
 if (commondata.pi == True):
     import RPi.GPIO as GPIO
 
 if (commondata.pi == True):
     GPIO.setmode(GPIO.BCM)
-
 
 
 class lampcontroller():
