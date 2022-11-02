@@ -21,7 +21,7 @@ if (plattis == 'x86_64'):
     pi = False
     log.debug("--------------Running in PC----------------")
 else:
-    if (plattis=='armv7l'):
+    if (plattis=='armv7l') or (plattis == 'armv6l'):
         pi = True
         log.debug("--------------Running in Raspberry----------------")
     else:
