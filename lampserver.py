@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-#
-##
-#
-
 from threading import Timer
 from aiohttp import web
 import platform

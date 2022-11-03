@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
-
 import time
 import os
 import logging
-import commondata
-log = logging.getLogger(__name__)
-
-logfilename = os.path.splitext(os.path.basename(__file__))[0]
-
-logging.basicConfig(level=commondata.loglevel,format=commondata.FORMAT,datefmt="%H:%M:%S",filename=commondata.logpath+logfilename+".log")
-
-
 import platform
 
-plattis= platform.uname()[4]
+import commondata
+
+log = logging.getLogger(__name__)
+logfilename = os.path.splitext(os.path.basename(__file__))[0]
+logging.basicConfig(level=commondata.loglevel,
+                    format=commondata.FORMAT,
+                    datefmt="%H:%M:%S",
+                    filename=commondata.logpath+logfilename + ".log")
+
+
+plattis = platform.uname()[4]
 if (plattis == 'x86_64'):
     pi = False
     log.debug("--------------Running in PC----------------")
 else:
-    if (plattis=='armv7l') or (plattis == 'armv6l'):
+    if (plattis == 'armv7l') or (plattis == 'armv6l'):
         pi = True
         log.debug("--------------Running in Raspberry----------------")
     else:
@@ -37,49 +37,46 @@ if (commondata.pi == True):
 
 
 class lampcontroller():
+    ctrl_port = 'Z'
 
     def __init__(self,portletter='A'):
 
-        def PortB():
-            self.on_pin = 14
-            self.off_pin =15
-
-
         def PortA():
             self.on_pin = 20
-            self.off_pin =21
+            self.off_pin = 21
+
+        def PortB():
+            self.on_pin = 14
+            self.off_pin = 15
 
         def PortC():
             self.on_pin = 25
-            self.off_pin =8
+            self.off_pin = 8
 
         def PortD():
             self.on_pin = 24
-            self.off_pin =23
+            self.off_pin = 23
 
         def PortIDFault():
-            log.info("Unknown port requested: "+ portletter)
+            log.info("Unknown port requested: " + portletter)
             self.on_pin = -1
             self.off_pin = -1
 
 
+        self.ctrl_port = portletter
 
-
-        # setdict={'A':PortA,
-        #          'B':PortB,
-        #          'C':PortC,
-        #          'D':PortD}.get(portletter)()
-
-        {'A':PortA,'B':PortB,
-         'C':PortC,'D':PortD}.get(portletter, PortIDFault)()
+        {'A': PortA,
+         'B': PortB,
+         'C': PortC,
+         'D': PortD}.get(portletter, PortIDFault)()
 
         if (commondata.pi ==True):
-            GPIO.setup(self.on_pin,GPIO.OUT)
-            GPIO.setup(self.off_pin,GPIO.OUT)
+            GPIO.setup(self.on_pin, GPIO.OUT)
+            GPIO.setup(self.off_pin, GPIO.OUT)
 
 
     def switch_on(self):
-        log.debug("Lamp on.")
+        log.debug("Laite päälle. Portti: " + self.ctrl_port)
         if (commondata.pi ==True):
             GPIO.output(self.on_pin,True)
         time.sleep(2)
@@ -87,7 +84,7 @@ class lampcontroller():
             GPIO.output(self.on_pin,False)
 
     def switch_off(self):
-        log.debug("Lamp off.")
+        log.debug("Laite pois. Portti: " + self.ctrl_port)
         if (commondata.pi ==True):
             GPIO.output(self.off_pin, True)
         time.sleep(2)
@@ -95,9 +92,9 @@ class lampcontroller():
             GPIO.output(self.off_pin, False)
 
 
-if(__name__== "__main__"):
-    mylamps=[]
-    lamplist='ABCD'
+if(__name__ == "__main__"):
+    mylamps = []
+    lamplist ='ABCD'
     for i in range(len(lamplist)):
         mylamps.append(lampcontroller(lamplist[i]))
 
