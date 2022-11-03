@@ -7,7 +7,9 @@ import os
 import logging
 
 import commondata
-import lampcontroller
+import relaycontroller
+
+pihavaloreleportti = 'A'
 
 log = logging.getLogger(__name__)
 logfilename = os.path.splitext(os.path.basename(__file__))[0]
@@ -85,7 +87,7 @@ class lampserver(object):
     def __init__(self,lampport=8080):
         log.info("-------------Lampserver starting---------------")
         self.mycounter = MyDownCounter(self.onfunction, self.offunction)
-        self.mylamp = lampcontroller.lampcontroller()
+        self.mylamp = relaycontroller.relaycontroller(pihavaloreleportti)
 
         self.app = web.Application()
         self.app.add_routes([web.get('/stat', self.process_stat)])

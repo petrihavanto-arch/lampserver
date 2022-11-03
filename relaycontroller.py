@@ -36,7 +36,7 @@ if (commondata.pi == True):
     GPIO.setmode(GPIO.BCM)
 
 
-class lampcontroller():
+class relaycontroller():
     ctrl_port = 'Z'
 
     def __init__(self,portletter='A'):
@@ -96,7 +96,7 @@ if(__name__ == "__main__"):
     mylamps = []
     lamplist ='ABCD'
     for i in range(len(lamplist)):
-        mylamps.append(lampcontroller(lamplist[i]))
+        mylamps.append(relaycontroller(lamplist[i]))
 
 
 
