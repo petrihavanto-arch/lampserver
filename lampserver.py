@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from threading import Timer
-from aiohttp import web
 import platform
 import socket
 import os
@@ -17,6 +16,7 @@ logging.basicConfig(level=commondata.loglevel,
                     datefmt="%H:%M:%S",
                     filename=commondata.logpath+logfilename+".log")
 
+from aiohttp import web
 
 
 class RepeatedTimer(object):
