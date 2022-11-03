@@ -7,15 +7,19 @@
 from threading import Timer
 from aiohttp import web
 import platform
-import lampcontroller
-
+import socket
 import os
 import logging
+
 import commondata
+import lampcontroller
 
 log = logging.getLogger(__name__)
 logfilename = os.path.splitext(os.path.basename(__file__))[0]
-logging.basicConfig(level=commondata.loglevel, format=commondata.FORMAT, datefmt="%H:%M:%S", filename=commondata.logpath+logfilename+".log")
+logging.basicConfig(level=commondata.loglevel,
+                    format=commondata.FORMAT,
+                    datefmt="%H:%M:%S",
+                    filename=commondata.logpath+logfilename+".log")
 
 
 
@@ -93,7 +97,9 @@ class lampserver(object):
         self.app.add_routes([web.get('/set', self.process_set)])
         self.app.add_routes([web.get('/off', self.process_off)])
 
-        web.run_app(self.app, port=lampport)
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('10.0.0.0', 0))
+        web.run_app(self.app, port=lampport, host=s.getsockname()[0])
 
 
     def onfunction(self):
