@@ -83,7 +83,7 @@ class MyDownCounter(RepeatedTimer):
 
 
 class lampserver(object):
-
+Tänne tuotava argumentteina html-sivut, portti,
     def __init__(self,lampport=8080):
         log.info("-------------Lampserver starting---------------")
         self.mycounter = MyDownCounter(self.onfunction, self.offunction)
