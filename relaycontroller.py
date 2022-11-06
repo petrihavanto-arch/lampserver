@@ -8,24 +8,18 @@ import platform
 
 import commondata
 
-log = logging.getLogger(__name__)
-logfilename = os.path.splitext(os.path.basename(__file__))[0]
-logging.basicConfig(level=commondata.loglevel,
-                    format=commondata.FORMAT,
-                    datefmt="%H:%M:%S",
-                    filename=commondata.logpath+logfilename + ".log")
 
 
 plattis = platform.uname()[4]
 if (plattis == 'x86_64'):
     pi = False
-    log.debug("--------------Running in PC----------------")
+    logging.debug("--------------Running in PC----------------")
 else:
     if (plattis == 'armv7l') or (plattis == 'armv6l'):
         pi = True
-        log.debug("--------------Running in Raspberry----------------")
+        logging.DEBUG("--------------Running in Raspberry----------------")
     else:
-        log.debug("--------------Running in who-knows-where----------------")
+        logging.DEBUG("--------------Running in who-knows-where----------------")
         exit(1)
 
 
@@ -58,7 +52,7 @@ class relaycontroller():
             self.off_pin = 23
 
         def PortIDFault():
-            log.info("Unknown port requested: " + portletter)
+            logging.info("Unknown port requested: " + portletter)
             self.on_pin = -1
             self.off_pin = -1
 
@@ -74,9 +68,11 @@ class relaycontroller():
             GPIO.setup(self.on_pin, GPIO.OUT)
             GPIO.setup(self.off_pin, GPIO.OUT)
 
+        logging.info("Varataan portti " + portletter)
+
 
     def switch_on(self):
-        log.debug("Laite päälle. Portti: " + self.ctrl_port)
+        logging.info("Laite päälle. Portti: " + self.ctrl_port)
         if (commondata.pi ==True):
             GPIO.output(self.on_pin,True)
         time.sleep(2)
@@ -84,7 +80,7 @@ class relaycontroller():
             GPIO.output(self.on_pin,False)
 
     def switch_off(self):
-        log.debug("Laite pois. Portti: " + self.ctrl_port)
+        logging.info("Laite pois. Portti: " + self.ctrl_port)
         if (commondata.pi ==True):
             GPIO.output(self.off_pin, True)
         time.sleep(2)

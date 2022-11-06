@@ -11,14 +11,9 @@ import relaycontroller
 
 pihavaloreleportti = 'A'
 
-log = logging.getLogger(__name__)
-logfilename = os.path.splitext(os.path.basename(__file__))[0]
-logging.basicConfig(level=commondata.loglevel,
-                    format=commondata.FORMAT,
-                    datefmt="%H:%M:%S",
-                    filename=commondata.logpath+logfilename+".log")
 
 from aiohttp import web
+logging.getLogger("aiohttp").setLevel(logging.WARNING)
 
 
 class RepeatedTimer(object):
@@ -82,12 +77,14 @@ class MyDownCounter(RepeatedTimer):
 
 
 
-class lampserver(object):
-Tänne tuotava argumentteina html-sivut, portti,
-    def __init__(self,lampport=8080):
-        log.info("-------------Lampserver starting---------------")
+class relayserver(object):
+
+    def __init__(self,lampport=8080, releportti='A',on_html="", off_html=""):
+        logging.info("-------------Lampserver starting---------------")
         self.mycounter = MyDownCounter(self.onfunction, self.offunction)
-        self.mylamp = relaycontroller.relaycontroller(pihavaloreleportti)
+        self.mylamp = relaycontroller.relaycontroller(releportti)
+        self.html_on=on_html
+        self.html_off=off_html
 
         self.app = web.Application()
         self.app.add_routes([web.get('/stat', self.process_stat)])
@@ -101,11 +98,11 @@ Tänne tuotava argumentteina html-sivut, portti,
 
 
     def onfunction(self):
-        log.debug("On")
+        logging.debug("On")
         self.mylamp.switch_on()
 
     def offunction(self):
-        log.debug("Off")
+        logging.debug("Off")
         self.mylamp.switch_off()
 
     async def process_add(self, request):
@@ -122,7 +119,7 @@ Tänne tuotava argumentteina html-sivut, portti,
 
     async def process_stat(self, request):
         if(self.mycounter.gettime()==0):
-                myinfile=open(commondata.WorkingDir+"html/Pihavalo-ohjain_off.htm","r")
+                myinfile=open(commondata.WorkingDir+self.html_off,"r")
                 mystring=myinfile.read()
                 myinfile.close()
                 my_pagetext=mystring
@@ -130,14 +127,12 @@ Tänne tuotava argumentteina html-sivut, portti,
 
         time_left_mins = self.mycounter.gettime() // 60
         time_left_secs = self.mycounter.gettime() % 60
-        myinfile=open(commondata.WorkingDir+"html/Pihavalo-ohjain_on.htm", "r")
+        myinfile=open(commondata.WorkingDir+self.html_on, "r")
         mystring=myinfile.read()
         myinfile.close()
         my_pagetext=mystring.format(time_left_mins,time_left_secs)
         return web.Response(content_type='text/html',
                             text=my_pagetext)
-
-        #return web.Response(content_type='text/html', text=" <meta http-equiv=\"refresh\" content=\"1\"/> <h1> \n\nJaljella: " + time_left + "</h1>")
 
 
     async def up(self,request):
@@ -147,6 +142,6 @@ Tänne tuotava argumentteina html-sivut, portti,
 
 if(__name__=="__main__"):
 
-    log.info("---------Lampserver starts on "+platform.uname()[4]+"-----------")
+    logging.info("---------Relayserver starts on "+platform.uname()[4]+"-----------")
 
-    mylampserver=lampserver(commondata.LampPort)
+    myrelayserver=relayserver(commondata.LampPort)
