@@ -82,7 +82,7 @@ class MyDownCounter(RepeatedTimer):
 class relayserver(object):
 
     def __init__(self,lampport=8080, releportti='A',on_html="", off_html="", time_increment=commondata.TimeIncrement):
-        local_logger.info("-------------Lampserver starting---------------")
+        local_logger.info("-------------Relayserver starting---------------")
         self.mycounter = MyDownCounter(self.onfunction, self.offunction)
         self.mylamp = relaycontroller.relaycontroller(releportti)
         self.my_time_increment= time_increment

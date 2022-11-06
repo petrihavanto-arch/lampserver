@@ -9,7 +9,7 @@ import proccmdline
 
 
 log = logging.getLogger(__name__)
-logfilename = os.path.splitext(os.path.basename(__file__))[0]
+logfilename = "releohjain"
 logging.basicConfig(level=commondata.loglevel,
                     format=commondata.FORMAT,
                     datefmt="%H:%M:%S",
@@ -35,6 +35,7 @@ def main():
     else:
         my_timeincrement = commondata.TimeIncrement *2
 
+    log.info("--------------Puhallinserver @ socket "+str(puhallin_socket)+" --------------")
     mydryerserver = relayserver.relayserver(lampport=puhallin_socket,
                                          releportti=puhallin_ohjain_releportti,
                                          on_html=puhallin_on_html,

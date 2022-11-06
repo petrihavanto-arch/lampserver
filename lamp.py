@@ -9,7 +9,7 @@ import proccmdline
 
 
 log = logging.getLogger(__name__)
-logfilename = os.path.splitext(os.path.basename(__file__))[0]
+logfilename = "releohjain"
 logging.basicConfig(level=commondata.loglevel,
                     format=commondata.FORMAT,
                     datefmt="%H:%M:%S",
@@ -30,6 +30,7 @@ def main():
 
     logging.getLogger("relayserver").setLevel(loglevel_here)
 
+    log.info("--------------Lampserver @ socket "+str(pihavalo_socket)+" --------------")
     mylampserver = relayserver.relayserver(lampport=pihavalo_socket,
                                          releportti=pihavalo_ohjain_releportti,
                                          on_html=pihavalo_on_html,
