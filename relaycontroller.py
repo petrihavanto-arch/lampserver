@@ -18,9 +18,9 @@ if (plattis == 'x86_64'):
 else:
     if (plattis == 'armv7l') or (plattis == 'armv6l'):
         pi = True
-        local_logger.DEBUG("--------------Running in Raspberry----------------")
+        local_logger.debug("--------------Running in Raspberry----------------")
     else:
-        local_logger.DEBUG("--------------Running in who-knows-where----------------")
+        local_logger.debug("--------------Running in who-knows-where----------------")
         exit(1)
 
 
