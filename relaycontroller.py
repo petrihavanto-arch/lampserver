@@ -41,12 +41,12 @@ class relaycontroller():
             self.off_pin = 21
 
         def PortB():
-            self.on_pin = 14
-            self.off_pin = 25
+            self.on_pin = 25
+            self.off_pin = 8
 
         def PortC():
             self.on_pin = 15
-            self.off_pin = 8
+            self.off_pin = 14
 
         def PortD():
             self.on_pin = 24
