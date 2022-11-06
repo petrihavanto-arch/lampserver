@@ -8,18 +8,19 @@ import platform
 
 import commondata
 
+local_logger=logging.getLogger(__name__)
 
 
 plattis = platform.uname()[4]
 if (plattis == 'x86_64'):
     pi = False
-    logging.debug("--------------Running in PC----------------")
+    local_logger.debug("--------------Running in PC----------------")
 else:
     if (plattis == 'armv7l') or (plattis == 'armv6l'):
         pi = True
-        logging.DEBUG("--------------Running in Raspberry----------------")
+        local_logger.DEBUG("--------------Running in Raspberry----------------")
     else:
-        logging.DEBUG("--------------Running in who-knows-where----------------")
+        local_logger.DEBUG("--------------Running in who-knows-where----------------")
         exit(1)
 
 
@@ -41,10 +42,10 @@ class relaycontroller():
 
         def PortB():
             self.on_pin = 14
-            self.off_pin = 15
+            self.off_pin = 25
 
         def PortC():
-            self.on_pin = 25
+            self.on_pin = 15
             self.off_pin = 8
 
         def PortD():
@@ -52,7 +53,7 @@ class relaycontroller():
             self.off_pin = 23
 
         def PortIDFault():
-            logging.info("Unknown port requested: " + portletter)
+            local_logger.info("Unknown port requested: " + portletter)
             self.on_pin = -1
             self.off_pin = -1
 
@@ -68,11 +69,11 @@ class relaycontroller():
             GPIO.setup(self.on_pin, GPIO.OUT)
             GPIO.setup(self.off_pin, GPIO.OUT)
 
-        logging.info("Varataan portti " + portletter)
+        local_logger.info("Varataan portti " + portletter)
 
 
     def switch_on(self):
-        logging.info("Laite päälle. Portti: " + self.ctrl_port)
+        local_logger.info("Portti: " + self.ctrl_port + " Laite päälle.")
         if (commondata.pi ==True):
             GPIO.output(self.on_pin,True)
         time.sleep(2)
@@ -80,7 +81,7 @@ class relaycontroller():
             GPIO.output(self.on_pin,False)
 
     def switch_off(self):
-        logging.info("Laite pois. Portti: " + self.ctrl_port)
+        local_logger.info("Portti: " + self.ctrl_port + " Laite pois.")
         if (commondata.pi ==True):
             GPIO.output(self.off_pin, True)
         time.sleep(2)
