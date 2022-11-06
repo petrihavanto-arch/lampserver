@@ -1,8 +1,8 @@
 import logging
 
-FORMAT="[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s"
-logpath="/tmp/"
-loglevel=logging.DEBUG
+FORMAT = "[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s"
+logpath = "/var/log/"
+loglevel = logging.INFO
 
 
 LampPort = 11111
@@ -22,8 +22,4 @@ else:
     else:
         print("Alustaa ei löytynyt")
         exit(1)
-
-
-#testmod2
-
 

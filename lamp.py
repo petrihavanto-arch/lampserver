@@ -24,16 +24,17 @@ pihavalo_off_html = "html/Pihavalo-ohjain_off.htm"
 def main():
     args = proccmdline.proccmdline()
     if vars(args)['debug']:
-        loglevel_here=logging.DEBUG
+        loglevel_here = logging.DEBUG
     else:
         loglevel_here = logging.INFO
 
-    logging.getLogger().setLevel(loglevel_here)
+    logging.getLogger("relayserver").setLevel(loglevel_here)
 
     mylampserver = relayserver.relayserver(lampport=pihavalo_socket,
                                          releportti=pihavalo_ohjain_releportti,
                                          on_html=pihavalo_on_html,
-                                         off_html=pihavalo_off_html)
+                                         off_html=pihavalo_off_html,
+                                         time_increment=commondata.TimeIncrement)
 
 
 if __name__ == '__main__':

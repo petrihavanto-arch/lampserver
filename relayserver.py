@@ -13,8 +13,6 @@ local_logger=logging.getLogger(__name__)
 import commondata
 import relaycontroller
 
-pihavaloreleportti = 'B'
-
 
 from aiohttp import web
 logging.getLogger("aiohttp").setLevel(logging.WARNING)
@@ -83,10 +81,11 @@ class MyDownCounter(RepeatedTimer):
 
 class relayserver(object):
 
-    def __init__(self,lampport=8080, releportti='A',on_html="", off_html=""):
+    def __init__(self,lampport=8080, releportti='A',on_html="", off_html="", time_increment=commondata.TimeIncrement):
         local_logger.info("-------------Lampserver starting---------------")
         self.mycounter = MyDownCounter(self.onfunction, self.offunction)
         self.mylamp = relaycontroller.relaycontroller(releportti)
+        self.my_time_increment= time_increment
         self.html_on=on_html
         self.html_off=off_html
 
@@ -110,7 +109,7 @@ class relayserver(object):
         self.mylamp.switch_off()
 
     async def process_add(self, request):
-        self.mycounter.addtime(commondata.TimeIncrement)
+        self.mycounter.addtime(self.my_time_increment)
         raise web.HTTPFound('/stat')
 
     async def process_set(self, request):
