@@ -16,7 +16,7 @@ logging.basicConfig(level=commondata.loglevel,
                     filename=commondata.logpath+logfilename+".log")
 
 pihavalo_socket = 11111
-pihavalo_ohjain_releportti = 'A'
+pihavalo_ohjain_releportti = 'B'
 pihavalo_on_html = "html/Pihavalo-ohjain_on.htm"
 pihavalo_off_html = "html/Pihavalo-ohjain_off.htm"
 
