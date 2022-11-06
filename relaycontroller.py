@@ -104,11 +104,11 @@ if(__name__ == "__main__"):
             mylamps[i].switch_on()
             local_logger.debug(lamplist[i] + " paalle")
             print(lamplist[i] + " paalle")
-            time.sleep(3)
+            input()
             mylamps[i].switch_off()
             local_logger.debug(lamplist[i] + " pois")
             print(lamplist[i] + " pois")
-            time.sleep(3)
+            input()
 
 
 
