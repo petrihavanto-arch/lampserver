@@ -95,13 +95,19 @@ if(__name__ == "__main__"):
     for i in range(len(lamplist)):
         mylamps.append(relaycontroller(lamplist[i]))
 
-
-
+    print("Looppiin")
+    local_logger.setLevel(logging.DEBUG)
+    local_logger.propagate = False
+#    logging.getLogger("__main__").setLevel(logging.DEBUG)
     while (True):
         for i in range(len(lamplist)):
             mylamps[i].switch_on()
+            local_logger.debug(lamplist[i] + " paalle")
+            print(lamplist[i] + " paalle")
             time.sleep(1)
             mylamps[i].switch_off()
+            local_logger.debug(lamplist[i] + " pois")
+            print(lamplist[i] + " pois")
             time.sleep(1)
 
 
