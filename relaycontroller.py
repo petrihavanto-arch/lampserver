@@ -76,7 +76,7 @@ class relaycontroller():
         local_logger.info("Portti: " + self.ctrl_port + " Laite päälle.")
         if (commondata.pi ==True):
             GPIO.output(self.on_pin,True)
-        time.sleep(2)
+        time.sleep(0.5)
         if (commondata.pi ==True):
             GPIO.output(self.on_pin,False)
 
@@ -84,7 +84,7 @@ class relaycontroller():
         local_logger.info("Portti: " + self.ctrl_port + " Laite pois.")
         if (commondata.pi ==True):
             GPIO.output(self.off_pin, True)
-        time.sleep(2)
+        time.sleep(0.5)
         if (commondata.pi ==True):
             GPIO.output(self.off_pin, False)
 
@@ -104,11 +104,11 @@ if(__name__ == "__main__"):
             mylamps[i].switch_on()
             local_logger.debug(lamplist[i] + " paalle")
             print(lamplist[i] + " paalle")
-            time.sleep(1)
+            time.sleep(3)
             mylamps[i].switch_off()
             local_logger.debug(lamplist[i] + " pois")
             print(lamplist[i] + " pois")
-            time.sleep(1)
+            time.sleep(3)
 
 
 
