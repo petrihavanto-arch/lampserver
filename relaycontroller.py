@@ -74,19 +74,21 @@ class relaycontroller():
 
     def switch_on(self):
         local_logger.info("Portti: " + self.ctrl_port + " Laite päälle.")
-        if (commondata.pi ==True):
-            GPIO.output(self.on_pin,True)
-        time.sleep(0.5)
-        if (commondata.pi ==True):
-            GPIO.output(self.on_pin,False)
+        for i in range (5):
+            if (commondata.pi ==True):
+                GPIO.output(self.on_pin,True)
+            time.sleep(0.5)
+            if (commondata.pi ==True):
+                GPIO.output(self.on_pin,False)
 
     def switch_off(self):
         local_logger.info("Portti: " + self.ctrl_port + " Laite pois.")
-        if (commondata.pi ==True):
-            GPIO.output(self.off_pin, True)
-        time.sleep(0.5)
-        if (commondata.pi ==True):
-            GPIO.output(self.off_pin, False)
+        for i in range(5):
+            if (commondata.pi ==True):
+                GPIO.output(self.off_pin, True)
+            time.sleep(0.5)
+            if (commondata.pi ==True):
+                GPIO.output(self.off_pin, False)
 
 
 if(__name__ == "__main__"):
