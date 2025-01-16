@@ -36,7 +36,7 @@ pihavalo_off_html = "html/Pihavalo-ohjain_off.htm"
 
 def setup_logging(script_name):
     """Configure logging to both file and console with rotation"""
-    if commondata.plattis=="" :
+    if commondata.pi :
         log_dir = Path('/home/pi/logs')
     else:
         log_dir= Path('/home/petri/logs')
