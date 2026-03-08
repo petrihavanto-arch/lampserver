@@ -1,0 +1,19 @@
+
+#zeropissa linkitä 
+# ln -s /etc/systemd/system/lamp.service /home/pi/python/lampserver/lamp.service
+#
+
+[Unit]
+Description=Pihavalo
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/python/lampserver
+ExecStart=/usr/bin/python3 ./lamp.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

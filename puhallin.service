@@ -1,0 +1,21 @@
+#zeropissa linkitä 
+# ln -s /etc/systemd/system/puhallin.service /home/pi/python/lampserver/puhallin.service
+# 
+ 
+
+
+
+[Unit]
+Description=Puhallin
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/python/lampserver
+ExecStart=/usr/bin/python3 ./puhallin.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
