@@ -2,7 +2,6 @@
 
 from threading import Timer
 import platform
-import socket
 import os
 import logging
 
@@ -95,9 +94,8 @@ class relayserver(object):
         self.app.add_routes([web.get('/set', self.process_set)])
         self.app.add_routes([web.get('/off', self.process_off)])
 
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(('10.0.0.0', 0))
-        web.run_app(self.app, port=lampport, host=s.getsockname()[0])
+        # Listen on every local interface, including the Tailscale interface.
+        web.run_app(self.app, port=lampport, host="0.0.0.0")
 
 
     def onfunction(self):
